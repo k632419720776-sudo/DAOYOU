@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="{{ lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,19 +10,29 @@
 <header class="topbar">
   <div class="container nav">
     <a class="brand" href="{{ url_for('index') }}">DAO<span>YOU</span></a>
-    <nav>
-      <a href="{{ url_for('guides') }}">Find Guides</a>
-      {% if current_user %}
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        {% if current_user.role == 'tourist' %}
-          <a href="{{ url_for('become_guide') }}">Become a Guide</a>
-        {% endif %}
-        <a href="{{ url_for('logout') }}">Logout</a>
-      {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-        <a class="btn btn-sm" href="{{ url_for('register') }}">Sign up</a>
-      {% endif %}
-    </nav>
+    
+<nav>
+  <a href="{{ url_for('guides') }}">{{ t('find_guides') }}</a>
+
+  {% if current_user %}
+    <a href="{{ url_for('dashboard') }}">{{ t('dashboard') }}</a>
+
+    {% if current_user.role == 'tourist' %}
+      <a href="{{ url_for('become_guide') }}">{{ t('become_guide') }}</a>
+    {% endif %}
+
+    <a href="{{ url_for('logout') }}">{{ t('logout') }}</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">{{ t('login') }}</a>
+    <a class="btn btn-sm" href="{{ url_for('register') }}">{{ t('register') }}</a>
+  {% endif %}
+
+  <span class="language-switcher">
+    <a href="{{ url_for('change_language', lang='en', next=request.path) }}">🇬🇧 English</a>
+    <a href="{{ url_for('change_language', lang='vi', next=request.path) }}">🇻🇳 Tiếng Việt</a>
+  </span>
+</nav>
+  
   </div>
 </header>
 
