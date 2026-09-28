@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Book {{ profile.user.name }} — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="booking-layout">
+    <form class="form-card" method="post">
+      <div class="eyebrow">BOOKING REQUEST</div><h1>Book {{ profile.user.name }}</h1>
+      <label>Date & time<input type="datetime-local" name="start_time" required></label>
+      <label>Meeting point<input name="location" value="{{ profile.location }}" required></label>
+      <label>Special request<textarea name="note" rows="5" placeholder="Food allergies, preferred route, pickup..."></textarea></label>
+      <button class="btn full">Continue to secure payment</button>
+    </form>
+    <aside class="booking-card">
+      <h3>Price breakdown</h3>
+      <div class="price-line"><span>Guide price (G)</span><b>{{ "{:,}".format(profile.price) }}đ</b></div>
+      <div class="price-line"><span>Platform fee (10%)</span><b>{{ "{:,}".format((profile.price*0.10)|int) }}đ</b></div>
+      <div class="price-total"><span>Total</span><b>{{ "{:,}".format((profile.price*1.10)|int) }}đ</b></div>
+      <p class="muted">DAOYOU holds the payment in demo escrow until the trip is completed.</p>
+    </aside>
+  </div>
+</section>
+{% endblock %}

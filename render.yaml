@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: daoyou
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    healthCheckPath: /health
+    envVars:
+      - key: DAOYOU_SECRET_KEY
+        generateValue: true
+      - key: SEED_DEMO
+        value: "true"

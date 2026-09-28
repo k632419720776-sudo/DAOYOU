@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Become a Guide — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="page-head"><div class="eyebrow">GUIDE ONBOARDING</div><h1>Build your guide profile</h1><p>Your profile will stay pending until an Admin approves it.</p></div>
+  <form class="form-card wide" method="post" enctype="multipart/form-data">
+    <div class="two-col">
+      <label>Location<input name="location" value="{{ profile.location or 'Hanoi' }}" required></label>
+      <label>Languages<input name="languages" value="{{ profile.languages or '' }}" placeholder="English,Vietnamese" required></label>
+      <label>Specialties<input name="specialties" value="{{ profile.specialties or '' }}" placeholder="Food,History" required></label>
+      <label>Experience (years)<input name="experience_years" type="number" min="0" value="{{ profile.experience_years or 1 }}"></label>
+      <label>Price/day (VND)<input name="price" type="number" min="0" value="{{ profile.price or 1000000 }}"></label>
+      <label>Guide type<select name="guide_type"><option>Professional</option><option>Local Friend</option></select></label>
+    </div>
+    <label>Bio<textarea name="bio" rows="6">{{ profile.bio or '' }}</textarea></label>
+    <label>Certificate / ID <input name="certificate" type="file" accept=".pdf,.png,.jpg,.jpeg"></label>
+    <label>30s intro video <input name="intro_video" type="file" accept=".mp4,.mov"></label>
+    <button class="btn">Submit for review</button>
+  </form>
+</section>
+{% endblock %}

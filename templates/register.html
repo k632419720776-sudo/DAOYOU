@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Register — DAOYOU{% endblock %}
+{% block content %}
+<section class="container auth-wrap"><form class="form-card" method="post">
+  <div class="eyebrow">JOIN DAOYOU</div><h1>Create account</h1>
+  <label>Name<input name="name" required></label>
+  <label>Email<input name="email" type="email" required></label>
+  <label>Password<input name="password" type="password" minlength="6" required></label>
+  <label>Account type<select name="role"><option value="tourist">Tourist</option><option value="guide">Guide</option></select></label>
+  <button class="btn full">Create account</button>
+  <p>Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+</form></section>
+{% endblock %}

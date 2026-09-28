@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Guide Workspace — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="page-head"><div class="eyebrow">GUIDE WORKSPACE</div><h1>Welcome, {{ current_user.name }}</h1></div>
+  <div class="stats-grid">
+    <div class="metric"><span>Profile</span><b>{{ profile.status if profile else 'pending' }}</b></div>
+    <div class="metric"><span>Rating</span><b>⭐ {{ "%.1f"|format(profile.rating) if profile else '0.0' }}</b></div>
+    <div class="metric"><span>Price</span><b>{{ "{:,}".format(profile.price) if profile else 0 }}đ</b></div>
+    <div class="metric"><span>Verified</span><b>{{ 'Yes' if profile and profile.verified else 'No' }}</b></div>
+  </div>
+  <div class="table-card">
+    <h2>Incoming requests</h2>
+    {% for b in bookings %}
+      <div class="booking-row">
+        <div><b>{{ b.order_id }}</b><br>{{ b.tourist.name }} · {{ b.start_time.strftime('%Y-%m-%d %H:%M') }}<br><span class="muted">{{ b.location }} · {{ b.note }}</span></div>
+        <div><span class="status">{{ b.status }}</span><br>{{ b.payment_status }}</div>
+        <div>
+          {% if b.status == 'awaiting_guide' %}
+          <form class="inline" method="post" action="{{ url_for('guide_action', booking_id=b.id) }}"><button class="btn btn-sm" name="action" value="accept">Accept</button><button class="btn btn-danger btn-sm" name="action" value="reject">Reject</button></form>
+          {% elif b.status == 'confirmed' %}
+          <form method="post" action="{{ url_for('guide_action', booking_id=b.id) }}"><button class="btn btn-sm" name="action" value="complete">Complete trip</button></form>
+          {% endif %}
+        </div>
+      </div>
+    {% else %}<div class="empty">No incoming bookings.</div>{% endfor %}
+  </div>
+</section>
+{% endblock %}

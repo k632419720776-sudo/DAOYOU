@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Admin Center — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="page-head"><div class="eyebrow">ADMIN CENTER</div><h1>DAOYOU control room</h1></div>
+  <div class="stats-grid">
+    <div class="metric"><span>Bookings</span><b>{{ booking_count }}</b></div>
+    <div class="metric"><span>DAOYOU revenue</span><b>{{ "{:,}".format(revenue) }}đ</b></div>
+    <div class="metric"><span>Completed</span><b>{{ completed }}</b></div>
+    <div class="metric"><span>Cancelled</span><b>{{ cancelled }}</b></div>
+  </div>
+
+  <div class="table-card">
+    <h2>Verification Center</h2>
+    {% for p in pending %}
+      <div class="booking-row">
+        <div><b>{{ p.user.name }}</b><br>{{ p.location }} · {{ p.languages }}<br>{{ p.specialties }} · {{ p.experience_years }} years<br><span class="muted">{{ p.bio }}</span></div>
+        <div><b>{{ "{:,}".format(p.price) }}đ</b><br>{{ p.guide_type }}</div>
+        <div class="inline">
+          {% if p.certificate_file %}<a class="btn btn-outline btn-sm" href="{{ url_for('uploads', filename=p.certificate_file) }}">Certificate</a>{% endif %}
+          <form method="post" action="{{ url_for('guide_decision', profile_id=p.id) }}"><button class="btn btn-sm" name="decision" value="approve">Approve</button><button class="btn btn-danger btn-sm" name="decision" value="reject">Reject</button></form>
+        </div>
+      </div>
+    {% else %}<div class="empty">No pending guide applications.</div>{% endfor %}
+  </div>
+
+  <div class="table-card">
+    <h2>SOS 24/7 Alerts</h2>
+    {% for a in alerts %}
+      <div class="booking-row">
+        <div><b>{{ a.tourist.name }}</b><br>{{ a.message }}<br><span class="muted">{{ a.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</span></div>
+        <div>{{ a.latitude }}, {{ a.longitude }}</div>
+        <div>
+          {% if a.latitude and a.longitude %}<a target="_blank" class="btn btn-outline btn-sm" href="https://www.google.com/maps/search/?api=1&query={{ a.latitude }},{{ a.longitude }}">Map</a>{% endif %}
+          {% if a.status != 'resolved' %}<form method="post" action="{{ url_for('resolve_sos', alert_id=a.id) }}"><button class="btn btn-sm">Resolve</button></form>{% endif %}
+        </div>
+      </div>
+    {% else %}<div class="empty">No SOS alerts.</div>{% endfor %}
+  </div>
+</section>
+{% endblock %}

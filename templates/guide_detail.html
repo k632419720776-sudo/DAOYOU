@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.user.name }} — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="profile-grid">
+    <div class="profile-main">
+      <div class="profile-hero">
+        <div class="avatar big">{{ profile.user.name[:1] }}</div>
+        <div><h1>{{ profile.user.name }} {% if profile.verified %}<span class="verified">✓ Verified</span>{% endif %}</h1>
+        <p>{{ profile.location }} · {{ profile.guide_type }} · {{ profile.experience_years }} years</p>
+        <div class="rating">⭐ {{ "%.1f"|format(profile.rating) }} / 5 · {{ profile.review_count }} reviews</div></div>
+      </div>
+      <h2>About</h2><p>{{ profile.bio }}</p>
+      <h3>Languages</h3><div class="chips">{% for x in profile.languages.split(',') %}<span>{{ x }}</span>{% endfor %}</div>
+      <h3>Specialties</h3><div class="chips">{% for x in profile.specialties.split(',') %}<span>{{ x }}</span>{% endfor %}</div>
+      <h2>Meeting point & map</h2>
+      <p>{{ profile.location }}</p>
+      <a class="btn btn-outline" target="_blank" href="https://www.google.com/maps/search/?api=1&query={{ profile.location|urlencode }}">Open Google Maps</a>
+      <h2>Reviews</h2>
+      {% for r in reviews %}
+        <div class="review"><b>⭐ {{ r.rating }}/5</b><p>{{ r.comment }}</p><small>{{ r.created_at.strftime('%Y-%m-%d') }}</small></div>
+      {% else %}<p class="muted">No reviews yet.</p>{% endfor %}
+    </div>
+    <aside class="booking-card">
+      <div class="eyebrow">BOOKING</div>
+      <h2>{{ "{:,}".format(profile.price) }}đ</h2><p>Guide price / day</p>
+      <div class="price-line"><span>Guide price</span><b>{{ "{:,}".format(profile.price) }}đ</b></div>
+      <div class="price-line"><span>DAOYOU fee (10%)</span><b>{{ "{:,}".format((profile.price*0.10)|int) }}đ</b></div>
+      <div class="price-total"><span>Total</span><b>{{ "{:,}".format((profile.price*1.10)|int) }}đ</b></div>
+      {% if current_user and current_user.id != profile.user_id %}
+        <a class="btn full" href="{{ url_for('book', guide_id=profile.id) }}">Book this guide</a>
+      {% elif not current_user %}
+        <a class="btn full" href="{{ url_for('login') }}">Login to book</a>
+      {% endif %}
+    </aside>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}My Account — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="page-head"><div class="eyebrow">TOURIST ACCOUNT</div><h1>My bookings</h1></div>
+  <div class="table-card">
+  {% for b in bookings %}
+    <div class="booking-row">
+      <div><b>{{ b.order_id }}</b><br><span class="muted">{{ b.guide.name }} · {{ b.location }}</span><br>{{ b.start_time.strftime('%Y-%m-%d %H:%M') }}</div>
+      <div><span class="status">{{ b.status }}</span><br><span class="muted">{{ b.payment_status }}</span></div>
+      <div><b>{{ "{:,}".format(b.total_price) }}đ</b>
+      {% if b.status == 'completed' and not b.review %}
+      <form class="review-form" method="post" action="{{ url_for('add_review', booking_id=b.id) }}">
+        <select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select>
+        <input name="comment" placeholder="Your review">
+        <button class="btn btn-sm">Review</button>
+      </form>
+      {% endif %}
+      </div>
+      {% if b.status not in ['completed','cancelled'] %}
+      <form method="post" action="{{ url_for('cancel_booking', booking_id=b.id) }}"><button class="btn btn-danger btn-sm">Cancel</button></form>
+      {% endif %}
+    </div>
+  {% else %}<div class="empty">No bookings yet. <a href="{{ url_for('guides') }}">Find a guide</a>.</div>{% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Payment {{ booking.order_id }} — DAOYOU{% endblock %}
+{% block content %}
+<section class="container page">
+  <div class="payment-card">
+    <div class="eyebrow">ESCROW CHECKOUT</div><h1>Secure payment</h1>
+    <p>Order ID: <b>{{ booking.order_id }}</b></p>
+    <div class="payment-grid">
+      <div><img class="qr" src="{{ url_for('static', filename='uploads/' + qr_filename) }}"><p class="center">Demo QR — not a real VNPay transaction</p></div>
+      <div>
+        <div class="price-line"><span>Tour price</span><b>{{ "{:,}".format(booking.base_price) }}đ</b></div>
+        <div class="price-line"><span>DAOYOU fee</span><b>{{ "{:,}".format(booking.tourist_fee) }}đ</b></div>
+        <div class="price-total"><span>Total</span><b>{{ "{:,}".format(booking.total_price) }}đ</b></div>
+        <div class="timer" data-expiry="{{ expires_at.isoformat() }}">20:00</div>
+        <form method="post" action="{{ url_for('demo_confirm_payment', booking_id=booking.id) }}">
+          <button class="btn full">Simulate successful payment</button>
+        </form>
+        <p class="muted small">Production: replace this demo flow with VNPay signed request + IPN verification.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
