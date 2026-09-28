@@ -4,7 +4,7 @@
   "become_guide": "Become a Guide",
   "logout": "Logout",
   "login": "Login",
-  "register": "Register",
+  "register": "Sign up",
   "featured_guides": "Featured guides",
   "view_all": "View all",
   "view_profile": "View profile",
@@ -27,5 +27,23 @@
   "save": "Save",
   "search": "Search",
   "english": "English",
-  "vietnamese": "Vietnamese"
+  "vietnamese": "Vietnamese",
+
+  "travel_connect_discover": "TRAVEL • CONNECT • DISCOVER",
+  "meet_local_guide": "Meet a local guide.",
+  "experience_vietnam_differently": "Experience Vietnam differently.",
+  "find_trusted_guides": "Find trusted guides by destination, language, specialty, budget and rating.",
+  "find_your_guide": "Find your guide",
+  "local_experiences_around_you": "Local experiences around you",
+  "platform_fee": "platform fee",
+  "top_guide_rating": "top guide rating",
+  "featured_guides_title": "Featured guides",
+  "no_guide_data": "No guide data yet.",
+  "run_seed_command": "Run python app.py --seed.",
+  "verified_guides": "Verified guides",
+  "admin_review": "Admin review before guides become visible.",
+  "transparent_payment": "Transparent payment",
+  "service_fee_checkout": "10% service fee shown before checkout.",
+  "sos_24_7": "SOS 24/7",
+  "send_location_admin": "Send location to the admin support center."
 }
