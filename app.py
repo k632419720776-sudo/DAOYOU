@@ -1,6 +1,7 @@
 import argparse
 import os
 import uuid
+import json
 from datetime import datetime, timedelta
 from functools import wraps
 
@@ -18,6 +19,48 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 UPLOAD_DIR = os.path.join(BASE_DIR, "static", "uploads")
 
 app = Flask(__name__, instance_relative_config=True)
+TRANSLATIONS_DIR = os.path.join(BASE_DIR, "translations")
+
+def load_translations(lang):
+    path = os.path.join(TRANSLATIONS_DIR, f"{lang}.json")
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        with open(os.path.join(TRANSLATIONS_DIR, "en.json"), "r", encoding="utf-8") as f:
+            return json.load(f)
+
+
+@app.context_processor
+def inject_i18n():
+    lang = session.get("lang", "en")
+    if lang not in {"en", "vi"}:
+        lang = "en"
+
+    translations = load_translations(lang)
+
+    def t(key):
+        return translations.get(key, key)
+
+    return {
+        "lang": lang,
+        "t": t
+    }
+
+
+@app.route("/language/<lang>")
+def change_language(lang):
+    if lang not in {"en", "vi"}:
+        lang = "en"
+
+    session["lang"] = lang
+
+    next_url = request.args.get("next")
+
+    if next_url and next_url.startswith("/"):
+        return redirect(next_url)
+
+    return redirect(request.referrer or url_for("index"))
 app.config["SECRET_KEY"] = os.environ.get("DAOYOU_SECRET_KEY", "dev-secret-change-me")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(BASE_DIR, "instance", "daoyou.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
