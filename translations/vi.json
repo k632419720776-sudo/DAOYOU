@@ -27,5 +27,23 @@
   "save": "Lưu",
   "search": "Tìm kiếm",
   "english": "English",
-  "vietnamese": "Tiếng Việt"
+  "vietnamese": "Tiếng Việt",
+
+  "travel_connect_discover": "DU LỊCH • KẾT NỐI • KHÁM PHÁ",
+  "meet_local_guide": "Gặp gỡ hướng dẫn viên địa phương.",
+  "experience_vietnam_differently": "Trải nghiệm Việt Nam theo một cách khác.",
+  "find_trusted_guides": "Tìm hướng dẫn viên đáng tin cậy theo điểm đến, ngôn ngữ, chuyên môn, ngân sách và đánh giá.",
+  "find_your_guide": "Tìm hướng dẫn viên",
+  "local_experiences_around_you": "Trải nghiệm địa phương quanh bạn",
+  "platform_fee": "phí nền tảng",
+  "top_guide_rating": "đánh giá hướng dẫn viên cao nhất",
+  "featured_guides_title": "Hướng dẫn viên nổi bật",
+  "no_guide_data": "Chưa có dữ liệu hướng dẫn viên.",
+  "run_seed_command": "Hãy chạy python app.py --seed.",
+  "verified_guides": "Hướng dẫn viên đã xác minh",
+  "admin_review": "Admin kiểm duyệt trước khi hướng dẫn viên được hiển thị.",
+  "transparent_payment": "Thanh toán minh bạch",
+  "service_fee_checkout": "Phí dịch vụ 10% được hiển thị trước khi thanh toán.",
+  "sos_24_7": "SOS 24/7",
+  "send_location_admin": "Gửi vị trí đến trung tâm hỗ trợ của Admin."
 }
