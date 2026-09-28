@@ -1,44 +1,173 @@
 {% extends "base.html" %}
-{% block title %}DAOYOU — Local Guides{% endblock %}
+
+{% block title %}DAOYOU — {{ t('local_guides') }}{% endblock %}
+
 {% block content %}
+
 <section class="hero">
   <div class="container hero-inner">
+
     <div>
-      <div class="eyebrow">TRAVEL • CONNECT • DISCOVER</div>
-      <h1>Meet a local guide.<br><span>Experience Vietnam differently.</span></h1>
-      <p>Find trusted guides by destination, language, specialty, budget and rating.</p>
-      <a class="btn" href="{{ url_for('guides') }}">Find your guide</a>
+      <div class="eyebrow">
+        {{ t('travel_connect_discover') }}
+      </div>
+
+      <h1>
+        {{ t('meet_local_guide') }}<br>
+        <span>{{ t('experience_vietnam_differently') }}</span>
+      </h1>
+
+      <p>
+        {{ t('find_trusted_guides') }}
+      </p>
+
+      <a class="btn" href="{{ url_for('guides') }}">
+        {{ t('find_your_guide') }}
+      </a>
     </div>
+
     <div class="hero-card">
-      <div class="mini-map">HANOI<br><span>Local experiences around you</span></div>
-      <div class="stats"><b>10%</b><small>platform fee</small><b>4.9★</b><small>top guide rating</small></div>
+
+      <div class="mini-map">
+        HANOI<br>
+        <span>{{ t('local_experiences_around_you') }}</span>
+      </div>
+
+      <div class="stats">
+        <b>10%</b>
+        <small>{{ t('platform_fee') }}</small>
+
+        <b>4.9★</b>
+        <small>{{ t('top_guide_rating') }}</small>
+      </div>
+
     </div>
+
   </div>
 </section>
+
 
 <section class="container section">
-  <div class="section-head"><h2>Featured guides</h2><a href="{{ url_for('guides') }}">View all →</a></div>
-  <div class="cards">
-    {% for g in guides %}
-    <article class="guide-card">
-      <div class="avatar">{{ g.user.name[:1] }}</div>
-      <div class="verified">{% if g.verified %}✓ Verified{% endif %}</div>
-      <h3>{{ g.user.name }}</h3>
-      <p class="muted">{{ g.location }} · {{ g.guide_type }}</p>
-      <p>{{ g.bio[:130] }}{% if g.bio|length > 130 %}...{% endif %}</p>
-      <div class="chips">{% for s in g.specialties.split(',')[:3] %}<span>{{ s }}</span>{% endfor %}</div>
-      <div class="card-bottom"><b>⭐ {{ "%.1f"|format(g.rating) }}</b><span>{{ "{:,}".format(g.price) }}đ/day</span></div>
-      <a class="btn btn-outline full" href="{{ url_for('guide_detail', guide_id=g.id) }}">View profile</a>
-    </article>
-    {% else %}
-      <p>No guide data yet. Run <code>python app.py --seed</code>.</p>
-    {% endfor %}
+
+  <div class="section-head">
+    <h2>{{ t('featured_guides_title') }}</h2>
+
+    <a href="{{ url_for('guides') }}">
+      {{ t('view_all') }} →
+    </a>
   </div>
+
+
+  <div class="cards">
+
+    {% for g in guides %}
+
+    <article class="guide-card">
+
+      <div class="avatar">
+        {{ g.user.name[:1] }}
+      </div>
+
+      <div class="verified">
+        {% if g.verified %}
+          ✓ {{ t('verified') }}
+        {% endif %}
+      </div>
+
+      <h3>
+        {{ g.user.name }}
+      </h3>
+
+      <p class="muted">
+        {{ g.location }} · {{ g.guide_type }}
+      </p>
+
+      <p>
+        {{ g.bio[:130] }}
+        {% if g.bio|length > 130 %}
+          ...
+        {% endif %}
+      </p>
+
+      <div class="chips">
+        {% for s in g.specialties.split(',')[:3] %}
+          <span>{{ s }}</span>
+        {% endfor %}
+      </div>
+
+      <div class="card-bottom">
+        <b>
+          ⭐ {{ "%.1f"|format(g.rating) }}
+        </b>
+
+        <span>
+          {{ "{:,}".format(g.price) }}đ/day
+        </span>
+      </div>
+
+      <a
+        class="btn btn-outline full"
+        href="{{ url_for('guide_detail', guide_id=g.id) }}"
+      >
+        {{ t('view_profile') }}
+      </a>
+
+    </article>
+
+    {% else %}
+
+      <p>
+        {{ t('no_guide_data') }}
+        {{ t('run_seed_command') }}
+      </p>
+
+    {% endfor %}
+
+  </div>
+
 </section>
 
+
 <section class="container section feature-row">
-  <div><span>01</span><h3>Verified guides</h3><p>Admin review before guides become visible.</p></div>
-  <div><span>02</span><h3>Transparent payment</h3><p>10% service fee shown before checkout.</p></div>
-  <div><span>03</span><h3>SOS 24/7</h3><p>Send location to the admin support center.</p></div>
+
+  <div>
+    <span>01</span>
+
+    <h3>
+      {{ t('verified_guides') }}
+    </h3>
+
+    <p>
+      {{ t('admin_review') }}
+    </p>
+  </div>
+
+
+  <div>
+    <span>02</span>
+
+    <h3>
+      {{ t('transparent_payment') }}
+    </h3>
+
+    <p>
+      {{ t('service_fee_checkout') }}
+    </p>
+  </div>
+
+
+  <div>
+    <span>03</span>
+
+    <h3>
+      {{ t('sos_24_7') }}
+    </h3>
+
+    <p>
+      {{ t('send_location_admin') }}
+    </p>
+  </div>
+
 </section>
+
 {% endblock %}
